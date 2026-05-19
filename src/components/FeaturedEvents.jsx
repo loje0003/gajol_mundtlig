@@ -82,7 +82,7 @@ function FeaturedEvents() {
                     <div className="text-left text-white w-full pb-4">
                       <h3 className="uppercase text-xl mb-2">{event.title}</h3>
 
-                      <p className="text-sm text-gray-200">Event description</p>
+                      <p className="text-sm">{event.description}</p>
                     </div>
                   </div>
                 </div>
