@@ -12,6 +12,7 @@ import { LiaCocktailSolid } from "react-icons/lia";
 import WelcomeCard from "@/components/WelcomeCard";
 import Testimonials from "@/components/Testimonials";
 import VideoSection from "@/components/VideoSection";
+import Gallery from "@/components/Gallery";
 
 const newsletterSchema = z.object({
   email: z.string().email("Please write a valid mail"),
@@ -90,6 +91,8 @@ export default function Home() {
       <Suspense fallback={<p className="text-center">Loading events...</p>}>
         <FeaturedEvents />
       </Suspense>
+
+      <Gallery />
 
       <VideoSection />
 

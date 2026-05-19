@@ -50,9 +50,12 @@ const Gallery = () => {
 
   return (
     <div>
+      {/* TITLE */}
       <h2 className="pt-30 text-center text-[25px] uppercase">Night club gallery</h2>
 
       <Image className="mx-auto" src="/assets/bottom_line2.png" alt="bottom line" width={200} height={20} />
+
+      {/* GRID */}
       <Wrapper
         className="mt-12 mb-12 grid grid-cols-1 md:grid-cols-12 gap-0"
         {...(isDesktop
@@ -65,8 +68,30 @@ const Gallery = () => {
           : {})}
       >
         {images.map((img, index) => (
-          <Item key={index} {...(isDesktop ? { variants: itemVariants } : {})} className={`relative w-full overflow-hidden ${img.span}`}>
-            <Image src={img.src} alt="gallery image" width={1200} height={800} className="w-full h-full object-cover block" />
+          <Item key={index} {...(isDesktop ? { variants: itemVariants } : {})} className={`relative overflow-hidden group ${img.span}`}>
+            {/* IMAGE */}
+            <div className="relative w-full md:h-80 overflow-hidden">
+              <Image src={img.src} alt="gallery image" fill className="object-cover transition duration-500 group-hover:scale-110" />
+            </div>
+
+            {/* OVERLAY */}
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300 z-10" />
+
+            {/* PINK TRIANGLE TOP LEFT (hover only) */}
+            <div
+              className="absolute top-0 left-0 w-10 h-10 bg-primary-500 opacity-0 group-hover:opacity-100 transition duration-300 z-20"
+              style={{
+                clipPath: "polygon(0 0, 100% 0, 0 100%)",
+              }}
+            />
+
+            {/* PINK TRIANGLE BOTTOM RIGHT (hover only) */}
+            <div
+              className="absolute bottom-0 right-0 w-10 h-10 bg-primary-500 opacity-0 group-hover:opacity-100 transition duration-300 z-20"
+              style={{
+                clipPath: "polygon(100% 100%, 100% 0, 0 100%)",
+              }}
+            />
           </Item>
         ))}
       </Wrapper>
