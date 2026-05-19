@@ -10,7 +10,6 @@ const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // FETCH API
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
@@ -27,50 +26,50 @@ const Testimonials = () => {
     fetchTestimonials();
   }, []);
 
-  // LOADING
   if (testimonials.length === 0) {
     return <p className="text-center my-20">Loading...</p>;
   }
 
-  // CURRENT TESTIMONIAL
   const testimonial = testimonials[currentIndex];
-
-  // NEXT
   const nextTestimonial = () => {
     setCurrentIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1));
   };
 
-  // PREVIOUS
   const prevTestimonial = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1));
   };
 
   return (
-    <div className="text-center my-20 px-5">
-      <Image src={`https://nightclub2026.onrender.com${testimonial.asset.url}`} alt={testimonial.asset.alt} width={170} height={170} className="mx-auto" />
+    <div className="relative w-full h-auto lg:h-180 z-0 my-20">
+      <Image src="/assets/bg/footerbg.jpg" alt="background" fill className="object-cover" />
 
-      <h3 className="mt-5 text-2xl">{testimonial.name}</h3>
+      <div className="absolute inset-0 bg-black/90 z-0" />
+      <div className="text-center py-20 px-5 z-10 relative">
+        <Image src={`https://nightclub2026.onrender.com${testimonial.asset.url}`} alt={testimonial.asset.alt} width={170} height={170} className="mx-auto" />
 
-      <p className="text-gray-500 mt-5 mx-auto max-w-[1000px]">{testimonial.content}</p>
+        <h3 className="mt-5 text-2xl">{testimonial.name}</h3>
 
-      <div className="grid grid-cols-3 gap-5 mt-5 w-35 mx-auto">
-        <a href={testimonial.facebook} target="_blank" className="border border-white p-2 flex justify-center">
-          <TiSocialFacebook />
-        </a>
+        <p className="text-gray-500 mt-5 mx-auto max-w-[1000px]">{testimonial.content}</p>
 
-        <a href={testimonial.twitter} target="_blank" className="border border-white p-2 flex justify-center">
-          <FaTwitter />
-        </a>
+        <div className="grid grid-cols-3 gap-5 mt-5 w-35 mx-auto">
+          <a href={testimonial.facebook} target="_blank" className="border border-white p-2 flex justify-center">
+            <TiSocialFacebook />
+          </a>
 
-        <div className="border border-white p-2 flex justify-center">
-          <FaSnapchatGhost />
+          <a href={testimonial.twitter} target="_blank" className="border border-white p-2 flex justify-center">
+            <FaTwitter />
+          </a>
+
+          <div className="border border-white p-2 flex justify-center">
+            <FaSnapchatGhost />
+          </div>
         </div>
-      </div>
 
-      <div className="flex justify-center gap-3 mt-10">
-        {Array.from({ length: testimonials.length }).map((_, index) => (
-          <button key={index} onClick={() => setCurrentIndex(index)} className={`w-4 h-4 transition ${currentIndex === index ? "bg-pink-500" : "bg-white"}`} />
-        ))}
+        <div className="flex justify-center gap-3 mt-10">
+          {Array.from({ length: testimonials.length }).map((_, index) => (
+            <button key={index} onClick={() => setCurrentIndex(index)} className={`w-4 h-4 transition ${currentIndex === index ? "bg-pink-500" : "bg-white"}`} />
+          ))}
+        </div>
       </div>
     </div>
   );
