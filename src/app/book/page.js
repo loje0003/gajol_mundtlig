@@ -1,13 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { z } from "zod";
+import { useActionState } from "react";
 
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Image from "next/image";
 import Button from "@/components/Button";
+
+import { reservationAction } from "./actions";
+
+const initialState = {
+  errors: {},
+  success: "",
+  submitError: "",
+};
 
 const tableCapacities = {
   1: 4,
@@ -27,43 +34,9 @@ const tableCapacities = {
   15: 8,
 };
 
-const reservationSchema = z
-  .object({
-    name: z.string().min(2, "Name is required"),
-    email: z.string().email("Invalid email"),
-    table: z.string().min(1, "Choose a table"),
-    guests: z.string().min(1, "Number of guests required"),
-    phone: z.string().min(6, "Phone number required"),
-  })
-  .superRefine((data, ctx) => {
-    const tableNumber = Number(data.table);
-    const guests = Number(data.guests);
-
-    const max = tableCapacities[tableNumber];
-
-    if (!max) {
-      ctx.addIssue({
-        path: ["table"],
-        message: "Invalid table selected",
-        code: "custom",
-      });
-      return;
-    }
-
-    if (guests > max) {
-      ctx.addIssue({
-        path: ["guests"],
-        message: `Max ${max} guests allowed for this table`,
-        code: "custom",
-      });
-    }
-  });
 const tableImages = ["/assets/table/table_1.png", "/assets/table/table_1.png", "/assets/table/table_2.png", "/assets/table/table_1.png", "/assets/table/table_3.png", "/assets/table/table_1.png", "/assets/table/table_1.png", "/assets/table/table_2.png", "/assets/table/table_1.png", "/assets/table/table_3.png", "/assets/table/table_1.png", "/assets/table/table_1.png", "/assets/table/table_2.png", "/assets/table/table_1.png", "/assets/table/table_3.png"];
 
-const Book = () => {
-  const searchParams = useSearchParams();
-  const eventId = searchParams.get("eventId");
-
+export default function Book() {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [reservedTables, setReservedTables] = useState([]);
@@ -77,70 +50,53 @@ const Book = () => {
     comment: "",
   });
 
-  const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState("");
-  const [submitError, setSubmitError] = useState("");
+  const [state, formAction, pending] = useActionState(reservationAction, initialState);
 
-  // FETCH EVENTS
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const res = await fetch("https://nightclub2026.onrender.com/events");
-        const data = await res.json();
-        setEvents(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchEvents();
+    fetch("https://nightclub2026.onrender.com/events")
+      .then((res) => res.json())
+      .then(setEvents)
+      .catch(console.error);
   }, []);
 
-  // FETCH RESERVATIONS
-  const fetchReservations = async (eventDate) => {
-    try {
-      const res = await fetch("https://nightclub2026.onrender.com/reservations");
-      const data = await res.json();
+  const getEventIdFromUrl = () => {
+    if (typeof window === "undefined") return null;
 
-      const filtered = data.filter((r) => new Date(r.date).toDateString() === new Date(eventDate).toDateString());
-
-      setReservedTables(filtered.map((r) => String(r.table)));
-    } catch (error) {
-      console.error(error);
-    }
+    const params = new URLSearchParams(window.location.search);
+    return params.get("eventId");
   };
 
-  // APPLY EVENT (single source of truth)
+  const fetchReservations = async (eventDate) => {
+    const res = await fetch("https://nightclub2026.onrender.com/reservations");
+    const data = await res.json();
+
+    const filtered = data.filter((r) => new Date(r.date).toDateString() === new Date(eventDate).toDateString());
+
+    setReservedTables(filtered.map((r) => String(r.table)));
+  };
+
   const applyEvent = (event) => {
     if (!event) return;
 
     setSelectedEvent(event);
-
     fetchReservations(event.date);
 
     window.history.replaceState(null, "", `/book?eventId=${event.id}`);
   };
 
-  // URL AUTO SELECT
   useEffect(() => {
-    if (!eventId || events.length === 0) return;
+    if (events.length === 0) return;
 
-    const found = events.find((e) => String(e.id) === String(eventId));
+    const id = getEventIdFromUrl();
+    if (!id) return;
+
+    const found = events.find((e) => String(e.id) === String(id));
 
     if (found) {
       applyEvent(found);
     }
-  }, [eventId, events]);
+  }, [events]);
 
-  // INPUT CHANGE
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // TABLE SELECT
   const handleSelectTable = (tableNumber) => {
     if (reservedTables.includes(String(tableNumber))) return;
 
@@ -150,76 +106,10 @@ const Book = () => {
     }));
   };
 
-  // EVENT CHANGE
   const handleEventChange = (e) => {
     const event = events.find((ev) => String(ev.id) === e.target.value);
 
     applyEvent(event);
-  };
-
-  // SUBMIT
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    setSuccess("");
-    setSubmitError("");
-
-    if (!selectedEvent) {
-      setSubmitError("Please choose a night first.");
-      return;
-    }
-
-    try {
-      reservationSchema.parse(formData);
-      setErrors({});
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const newErrors = {};
-
-        error.issues.forEach((err) => {
-          newErrors[err.path[0]] = err.message;
-        });
-
-        setErrors(newErrors);
-      }
-      return;
-    }
-
-    try {
-      const response = await fetch("https://nightclub2026.onrender.com/reservations", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          eventId: selectedEvent.id,
-          date: selectedEvent.date,
-          eventTitle: selectedEvent.title,
-        }),
-      });
-
-      if (response.status === 409) {
-        setSubmitError("This table is already reserved.");
-        return;
-      }
-
-      if (!response.ok) throw new Error();
-
-      setSuccess("Reservation successful!");
-
-      setReservedTables((prev) => [...prev, formData.table]);
-
-      setFormData({
-        name: "",
-        email: "",
-        table: "",
-        guests: "",
-        phone: "",
-        comment: "",
-      });
-    } catch (error) {
-      console.error(error);
-      setSubmitError("Failed to send reservation.");
-    }
   };
 
   return (
@@ -227,7 +117,6 @@ const Book = () => {
       <Nav />
       <Hero text="Book table" />
 
-      {/* TABLES */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mt-20 mx-30">
         {tableImages.map((src, index) => {
           const tableNumber = String(index + 1);
@@ -254,38 +143,61 @@ const Book = () => {
         })}
       </div>
 
-      {/* FORM */}
       <div className="mt-5 mx-5 md:mt-20 md:mx-30">
         <h2 className="uppercase text-2xl font-bold">Book a Table</h2>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          {/* NAME */}
+        <form action={formAction} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <input type="hidden" name="eventId" value={selectedEvent?.id || ""} />
+
           <div>
-            <input name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} className="w-full border px-5 py-5" />
-            {errors.name && <p className="text-pink-500 text-sm mt-1">{errors.name}</p>}
+            <input
+              name="name"
+              placeholder="Your Name"
+              className="w-full border px-5 py-5 text-white bg-black
+      focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition"
+            />
+            {state.errors?.name && <p>{state.errors.name}</p>}
           </div>
 
-          {/* EMAIL */}
           <div>
-            <input name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} className="w-full border px-5 py-5" />
-            {errors.email && <p className="text-pink-500 text-sm mt-1">{errors.email}</p>}
+            <input
+              name="email"
+              placeholder="Your Email"
+              className="w-full border px-5 py-5 text-white bg-black
+      focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition"
+            />
+            {state.errors?.email && <p>{state.errors.email}</p>}
           </div>
 
-          {/* TABLE */}
           <div>
-            <input name="table" placeholder="Table Number" value={formData.table} onChange={handleChange} className="w-full border px-5 py-5" />
-            {errors.table && <p className="text-pink-500 text-sm mt-1">{errors.table}</p>}
+            <input
+              name="table"
+              value={formData.table}
+              readOnly
+              placeholder="Table Number"
+              className="w-full border px-5 py-5 text-white bg-black
+      focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition"
+            />
+            {state.errors?.table && <p>{state.errors.table}</p>}
           </div>
 
-          {/* GUESTS */}
           <div>
-            <input name="guests" placeholder="Number of Guests" value={formData.guests} onChange={handleChange} className="w-full border px-5 py-5" />
-            {errors.guests && <p className="text-pink-500 text-sm mt-1">{errors.guests}</p>}
+            <input
+              name="guests"
+              placeholder="Number of Guests"
+              className="w-full border px-5 py-5 text-white bg-black
+      focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition"
+            />
+            {state.errors?.guests && <p>{state.errors.guests}</p>}
           </div>
 
-          {/* EVENT */}
           <div>
-            <select value={selectedEvent ? String(selectedEvent.id) : ""} onChange={handleEventChange} className="w-full border px-5 py-5 bg-black">
+            <select
+              value={selectedEvent ? String(selectedEvent.id) : ""}
+              onChange={handleEventChange}
+              className="w-full border px-5 py-5 text-white bg-black
+      focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition"
+            >
               <option value="" disabled>
                 Choose a night
               </option>
@@ -298,32 +210,36 @@ const Book = () => {
             </select>
           </div>
 
-          {/* PHONE */}
           <div>
-            <input name="phone" placeholder="Phone" value={formData.phone} onChange={handleChange} className="w-full border px-5 py-5" />
-            {errors.phone && <p className="text-pink-500 text-sm mt-1">{errors.phone}</p>}
+            <input
+              name="phone"
+              placeholder="Phone"
+              className="w-full border px-5 py-5 text-white bg-black
+      focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition"
+            />
+            {state.errors?.phone && <p>{state.errors.phone}</p>}
           </div>
 
-          {/* COMMENT */}
           <div className="md:col-span-2">
-            <textarea name="comment" placeholder="Comment" value={formData.comment} onChange={handleChange} className="w-full border px-5 py-5" />
+            <textarea
+              name="comment"
+              placeholder="Comment"
+              className="w-full border px-5 py-5 text-white bg-black
+      focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition"
+            />
           </div>
 
-          {/* SUCCESS + ERROR */}
-          {success && <p className="text-green-500 md:col-span-2">{success}</p>}
+          {state.success && <p className="text-green-500">{state.success}</p>}
 
-          {submitError && <p className="text-pink-500 md:col-span-2">{submitError}</p>}
+          {state.submitError && <p className="text-pink-500">{state.submitError}</p>}
 
-          {/* BUTTON */}
           <div className="md:col-span-2 flex justify-end">
-            <Button type="submit" variant="primary">
-              RESERVE
+            <Button type="submit" disabled={pending}>
+              {pending ? "RESERVING..." : "RESERVE"}
             </Button>
           </div>
         </form>
       </div>
     </div>
   );
-};
-
-export default Book;
+}
