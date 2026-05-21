@@ -92,7 +92,7 @@ export default function Home() {
       <h2 className="pt-30 text-center text-[25px] uppercase">featured events</h2>
       <Image className="mx-auto" src="/assets/bottom_line2.png" alt="bottom line" width={200} height={20} />
 
-      <Suspense fallback={<p className="text-center">Loading events...</p>}>
+      <Suspense fallback={<Loader text="Loading featured events..." />}>
         <FeaturedEvents />
       </Suspense>
 
