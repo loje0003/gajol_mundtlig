@@ -14,6 +14,7 @@ import Testimonials from "@/components/Testimonials";
 import VideoSection from "@/components/VideoSection";
 import Gallery from "@/components/Gallery";
 import Loader from "@/components/Loader";
+import MusicSection from "@/components/MusicSection";
 
 const newsletterSchema = z.object({
   email: z.string().email("Please write a valid mail"),
@@ -96,6 +97,7 @@ export default function Home() {
       </Suspense>
 
       <Gallery />
+      <MusicSection />
 
       <VideoSection />
 
