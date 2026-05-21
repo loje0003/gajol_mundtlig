@@ -22,7 +22,6 @@ const CommentForm = ({ eventId }) => {
   const [success, setSuccess] = useState("");
   const [submitError, setSubmitError] = useState("");
 
-  // FETCH COMMENTS (like Book reservations)
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -51,7 +50,6 @@ const CommentForm = ({ eventId }) => {
     setSuccess("");
     setSubmitError("");
 
-    // VALIDATION
     try {
       schema.parse(formData);
     } catch (error) {
@@ -88,7 +86,6 @@ const CommentForm = ({ eventId }) => {
 
       const newComment = await response.json();
 
-      // UPDATE UI instantly (same pattern as Book)
       setComments((prev) => [newComment, ...prev]);
 
       setSuccess("Comment submitted successfully!");

@@ -13,6 +13,7 @@ import WelcomeCard from "@/components/WelcomeCard";
 import Testimonials from "@/components/Testimonials";
 import VideoSection from "@/components/VideoSection";
 import Gallery from "@/components/Gallery";
+import Loader from "@/components/Loader";
 
 const newsletterSchema = z.object({
   email: z.string().email("Please write a valid mail"),
@@ -72,7 +73,9 @@ export default function Home() {
 
   return (
     <main>
-      <Header />
+      <Suspense fallback={<Loader />}>
+        <Header />
+      </Suspense>
       <Nav />
       <h2 className="pt-20 text-center text-[25px] uppercase">welcome in nightclub</h2>
       <Image className="mx-auto" src="/assets/bottom_line2.png" alt="bottom line" width={200} height={20} />
