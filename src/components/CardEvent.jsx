@@ -1,77 +1,64 @@
-"use client";
-
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import Button from "./Button";
+import Link from "next/link";
 
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-};
+const CardEvent = ({ id, title, date, location, description, asset, index }) => {
+  const imageSrc = asset?.startsWith("/") ? `https://nightclub2026.onrender.com${asset}` : asset;
 
-const itemVariants = {
-  hidden: { x: -120, opacity: 0 },
-  show: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-    },
-  },
-};
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
 
-const Gallery = () => {
-  const [isDesktop, setIsDesktop] = useState(false);
+  const formattedTime = new Date(date).toLocaleTimeString("da-DK", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
 
-  useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth >= 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  const Wrapper = isDesktop ? motion.div : "div";
-  const Item = isDesktop ? motion.div : "div";
-
-  const images = [
-    { src: "/assets/content-img/gallery1_big.jpg", span: "md:col-span-3" },
-    { src: "/assets/content-img/gallery2_big.jpg", span: "md:col-span-3" },
-    { src: "/assets/content-img/gallery3_big.jpg", span: "md:col-span-3" },
-    { src: "/assets/content-img/gallery4_big.jpg", span: "md:col-span-3" },
-    { src: "/assets/content-img/gallery5_big.jpg", span: "md:col-span-4" },
-    { src: "/assets/content-img/gallery6_big.jpg", span: "md:col-span-4" },
-    { src: "/assets/content-img/gallery7_big.jpg", span: "md:col-span-4" },
-  ];
+  const isReversed = index % 2 === 1;
 
   return (
-    <div>
-      <h2 className="pt-30 text-center text-[25px] uppercase">Night club gallery</h2>
+    <section
+      className={`
+        flex flex-col 
+        md:flex-row md:items-stretch 
+        ${isReversed ? "md:flex-row-reverse" : ""}
+      `}
+    >
+      {/* IMAGE */}
+      <div className="relative w-full h-75 md:w-1/2 md:h-auto">
+        <Image src={imageSrc} alt={title || "event image"} fill className="object-cover" />
+      </div>
 
-      <Image className="mx-auto" src="/assets/bottom_line2.png" alt="bottom line" width={200} height={20} />
-      <Wrapper
-        className="mt-12 mb-12 grid grid-cols-1 md:grid-cols-12 gap-0"
-        {...(isDesktop
-          ? {
-              variants: containerVariants,
-              initial: "hidden",
-              whileInView: "show",
-              viewport: { once: true, amount: 0.2 },
-            }
-          : {})}
+      {/* CONTENT */}
+      <div
+        className={`
+          flex w-full flex-col gap-4 p-8
+          md:w-1/2 md:pt-10 
+          ${isReversed ? "md:pl-40 md:pr-8" : "md:pr-40 md:pl-8"}
+        `}
       >
-        {images.map((img, index) => (
-          <Item key={index} {...(isDesktop ? { variants: itemVariants } : {})} className={`relative w-full overflow-hidden ${img.span}`}>
-            <Image src={img.src} alt="gallery image" width={1200} height={800} className="w-full h-full object-cover block" />
-          </Item>
-        ))}
-      </Wrapper>
-    </div>
+        <h3 className="text-3xl uppercase leading-tight md:text-xl">{title}</h3>
+
+        <div className="flex flex-wrap gap-2 text-sm md:text-base">
+          <p className="text-primary-500">
+            {formattedDate} · {formattedTime}
+          </p>
+          <span>|</span>
+          <p className="uppercase">{location}</p>
+        </div>
+
+        <p className="text-base leading-relaxed text-gray-500">{description}</p>
+
+        <div className="mt-4 mb-12 flex justify-center md:justify-end">
+          <Link href={`/detailview/${id}`}>
+            <Button variant="primary">READ MORE</Button>
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 };
 
-export default Gallery;
+export default CardEvent;
