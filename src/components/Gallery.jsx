@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import Button from "@/components/Button";
+import Link from "next/link";
 
 const containerVariants = {
   hidden: {},
@@ -27,6 +29,7 @@ const itemVariants = {
 
 const Gallery = () => {
   const [isDesktop, setIsDesktop] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const check = () => setIsDesktop(window.innerWidth >= 768);
@@ -68,16 +71,25 @@ const Gallery = () => {
           : {})}
       >
         {images.map((img, index) => (
-          <Item key={index} {...(isDesktop ? { variants: itemVariants } : {})} className={`relative overflow-hidden group ${img.span}`}>
+          <Item
+            key={index}
+            {...(isDesktop ? { variants: itemVariants } : {})}
+            className={`relative overflow-hidden group ${isDesktop ? "cursor-pointer" : "cursor-default"} ${img.span}`}
+            {...(isDesktop
+              ? {
+                  onClick: () => setSelectedImage(img.src),
+                }
+              : {})}
+          >
             {/* IMAGE */}
-            <div className="relative w-full md:h-80 overflow-hidden">
+            <div className="relative w-full aspect-4/3 md:h-80 overflow-hidden">
               <Image src={img.src} alt="gallery image" fill className="object-cover transition duration-500 group-hover:scale-110" />
             </div>
 
             {/* OVERLAY */}
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300 z-10" />
 
-            {/* PINK TRIANGLE TOP LEFT (hover only) */}
+            {/* PINK TRIANGLE TOP LEFT */}
             <div
               className="absolute top-0 left-0 w-10 h-10 bg-primary-500 opacity-0 group-hover:opacity-100 transition duration-300 z-20"
               style={{
@@ -85,7 +97,7 @@ const Gallery = () => {
               }}
             />
 
-            {/* PINK TRIANGLE BOTTOM RIGHT (hover only) */}
+            {/* PINK TRIANGLE BOTTOM RIGHT */}
             <div
               className="absolute bottom-0 right-0 w-10 h-10 bg-primary-500 opacity-0 group-hover:opacity-100 transition duration-300 z-20"
               style={{
@@ -95,6 +107,48 @@ const Gallery = () => {
           </Item>
         ))}
       </Wrapper>
+      {selectedImage && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={() => setSelectedImage(null)}>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedImage((prev) => {
+                const currentIndex = images.findIndex((img) => img.src === prev);
+                const newIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+                return images[newIndex].src;
+              });
+            }}
+            className="absolute left-4 md:left-10 w-10 h-10 bg-black/60 border flex items-center justify-center z-50"
+          >
+            <Image src="/assets/icon/Play.svg" alt="Previous" width={14} height={14} className="rotate-180" />
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedImage((prev) => {
+                const currentIndex = images.findIndex((img) => img.src === prev);
+                const newIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+                return images[newIndex].src;
+              });
+            }}
+            className="absolute right-4 md:right-10 w-10 h-10 bg-black-70 border flex items-center justify-center z-50"
+          >
+            <Image src="/assets/icon/Play.svg" alt="Next" width={14} height={14} />
+          </button>
+          <div className="max-w-4xl w-full overflow-hidden max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full h-[50vh] md:h-105 min-h-75">
+              <Image src={selectedImage} alt="Selected image" fill className="object-cover" />
+            </div>
+            <div className="bg-black px-6 md:px-10 py-6 md:py-10">
+              <h3 className="text-lg uppercase mb-4">Night club party</h3>
+              <p className="text-gray-500 leading-7 mb-6">here are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
+              <Link href="/events">
+                <Button variant="primary">Read more</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
