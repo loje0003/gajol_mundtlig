@@ -2,11 +2,12 @@ import EventDetail from "@/components/EventDetail";
 import Hero from "@/components/Hero";
 import { Suspense } from "react";
 import CommentForm from "@/components/CommentForm";
+import Loader from "@/components/Loader";
 
 const DetailEvent = async ({ params }) => {
   return (
     <main>
-      <Suspense fallback={<div>Loading product details…</div>}>
+      <Suspense fallback={<Loader text="Loading event details..." />}>
         <FetchEventDetail params={params} />
       </Suspense>
     </main>
