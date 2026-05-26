@@ -1,7 +1,7 @@
 import EventDetail from "@/components/EventDetail";
 import Hero from "@/components/Hero";
 import { Suspense } from "react";
-import CommentForm from "@/components/CommentForm";
+import CommentForm from "@/components/CommentForm/CommentForm";
 import Loader from "@/components/Loader";
 
 const DetailEvent = async ({ params }) => {

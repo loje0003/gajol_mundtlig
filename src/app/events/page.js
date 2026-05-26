@@ -1,4 +1,4 @@
-import EventList from "@/components/EventList";
+import EventList from "@/components/EventList/EventList";
 import Hero from "@/components/Hero";
 import Image from "next/image";
 import Nav from "@/components/Nav";
