@@ -13,7 +13,6 @@ const FeaturedEventsClient = ({ events }) => {
 
   const startIndex = currentPage * eventsPerPage;
   const visibleEvents = events.slice(startIndex, startIndex + eventsPerPage);
-
   const totalPages = Math.ceil(events.length / eventsPerPage);
 
   useEffect(() => {
@@ -36,11 +35,7 @@ const FeaturedEventsClient = ({ events }) => {
             day: "numeric",
           });
 
-          const time = new Date(event.date).toLocaleTimeString("da-DK", {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-          });
+          const time = event.schedule?.[0]?.time || "";
 
           const imageSrc = typeof event.heroAsset === "object" ? `https://nightclub2026.onrender.com${event.heroAsset?.url}` : event.heroAsset;
 
@@ -50,9 +45,19 @@ const FeaturedEventsClient = ({ events }) => {
                 <Image src={imageSrc} alt={event.title || "event image"} fill className="object-cover transition duration-300 group-hover:scale-110" />
 
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 z-10">
-                  <div className="absolute top-0 left-0 w-10 h-10 bg-primary-500" style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }} />
+                  <div
+                    className="absolute top-0 left-0 w-10 h-10 bg-primary-500"
+                    style={{
+                      clipPath: "polygon(0 0, 100% 0, 0 100%)",
+                    }}
+                  />
 
-                  <div className="absolute bottom-0 right-0 w-10 h-10 bg-primary-500" style={{ clipPath: "polygon(100% 100%, 100% 0, 0 100%)" }} />
+                  <div
+                    className="absolute bottom-0 right-0 w-10 h-10 bg-primary-500"
+                    style={{
+                      clipPath: "polygon(100% 100%, 100% 0, 0 100%)",
+                    }}
+                  />
 
                   <div className="flex flex-col h-full px-8 py-6">
                     <div className="flex-1" />

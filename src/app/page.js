@@ -4,7 +4,7 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import Header from "@/components/Header";
 import Nav from "@/components/Nav";
-import FeaturedEvents from "@/components/FeaturedEvents";
+import FeaturedEvents from "@/components/FeaturedEvents/FeaturedEvents";
 import WelcomeCard from "@/components/WelcomeCard";
 import Testimonials from "@/components/Testimonials";
 import VideoSection from "@/components/VideoSection";
