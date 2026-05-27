@@ -15,7 +15,6 @@ export async function contactAction(prevState, formData) {
     content: formData.get("content"),
   };
 
-  // validation
   const result = contactSchema.safeParse(values);
 
   if (!result.success) {
