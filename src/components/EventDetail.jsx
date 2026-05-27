@@ -29,13 +29,11 @@ const EventDetail = ({ id, title, heroAsset, description, date, doorsOpen, locat
       <Nav />
       <Hero text={title} />
       <div className="mx-auto max-w-5xl px-6 py-10">
-        {/* Image */}
         <div className="relative h-80 overflow-hidden rounded-xl">
           <Image src={imageSrc} alt={title || "event image"} fill className="object-cover" />
         </div>
-        {/* Content */}
+
         <div className="mt-8 grid gap-8 md:grid-cols-2">
-          {/* Left side */}
           <div>
             <h2 className="mb-4 text-2xl font-bold uppercase">{title}</h2>
             <p className="mb-6 text-gray-500">{description}</p>
@@ -54,7 +52,7 @@ const EventDetail = ({ id, title, heroAsset, description, date, doorsOpen, locat
               </ul>
             </div>
           </div>
-          {/* Right side */}
+
           <div className="rounded-xl border border-primary-500 p-6">
             <h3 className="mb-6 text-xl font-bold uppercase">Event Details</h3>
 
@@ -91,4 +89,3 @@ const EventDetail = ({ id, title, heroAsset, description, date, doorsOpen, locat
 };
 
 export default EventDetail;
-

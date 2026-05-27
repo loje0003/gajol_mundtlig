@@ -11,8 +11,8 @@ const Header = () => {
   const [randomBg, setRandomBg] = useState(backgrounds[0]);
 
   useEffect(() => {
-    const index = Math.floor(Math.random() * backgrounds.length);
-    setRandomBg(backgrounds[index]);
+    const randomBackground = Math.floor(Math.random() * backgrounds.length);
+    setRandomBg(backgrounds[randomBackground]);
   }, []);
 
   const fadeSlide = {

@@ -53,12 +53,10 @@ const Gallery = () => {
 
   return (
     <div>
-      {/* TITLE */}
       <h2 className="pt-30 text-center text-[25px] uppercase">Night club gallery</h2>
 
       <Image className="mx-auto" src="/assets/bottom_line2.png" alt="bottom line" width={200} height={20} />
 
-      {/* GRID */}
       <Wrapper
         className="mt-12 mb-12 grid grid-cols-1 md:grid-cols-12 gap-0"
         {...(isDesktop
@@ -81,15 +79,12 @@ const Gallery = () => {
                 }
               : {})}
           >
-            {/* IMAGE */}
             <div className="relative w-full aspect-4/3 md:h-80 overflow-hidden">
               <Image src={img.src} alt="gallery image" fill className="object-cover transition duration-500 group-hover:scale-110" />
             </div>
 
-            {/* OVERLAY */}
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300 z-10" />
 
-            {/* PINK TRIANGLE TOP LEFT */}
             <div
               className="absolute top-0 left-0 w-10 h-10 bg-primary-500 opacity-0 group-hover:opacity-100 transition duration-300 z-20"
               style={{
@@ -97,7 +92,6 @@ const Gallery = () => {
               }}
             />
 
-            {/* PINK TRIANGLE BOTTOM RIGHT */}
             <div
               className="absolute bottom-0 right-0 w-10 h-10 bg-primary-500 opacity-0 group-hover:opacity-100 transition duration-300 z-20"
               style={{
