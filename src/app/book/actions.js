@@ -41,6 +41,7 @@ const reservationSchema = z
         message: "Invalid table selected",
         code: "custom",
       });
+
       return;
     }
 
@@ -83,7 +84,9 @@ export async function reservationAction(prevState, formData) {
   try {
     const response = await fetch("https://nightclub2026.onrender.com/reservations", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         ...result.data,
         date: new Date().toISOString(),
