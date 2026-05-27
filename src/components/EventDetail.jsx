@@ -91,3 +91,4 @@ const EventDetail = ({ id, title, heroAsset, description, date, doorsOpen, locat
 };
 
 export default EventDetail;
+
