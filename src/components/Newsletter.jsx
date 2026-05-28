@@ -70,8 +70,8 @@ export default function Newsletter() {
         Subscribe to our newsletter and never miss an <span className="text-primary-500">Event</span>
       </h3>
 
-      <form onSubmit={handleSubscribe} className="text-center mt-10">
-        <input className="border-b-1 pb-2 my-auto lg:mr-8  placeholder-white outline-none focus:border-primary-500 transition" type="email" size="45" placeholder="Enter Your Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+      <form onSubmit={handleSubscribe} className="mt-10 flex flex-col items-center gap-4 md:flex-row md:justify-center">
+        <input className="w-full max-w-md border-b pb-2 placeholder-white outline-none focus:border-primary-500 transition" type="email" placeholder="Enter Your Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
         <Button type="submit" variant="primary" disabled={loading}>
           {loading ? "Subscribing..." : "Subscribe"}
