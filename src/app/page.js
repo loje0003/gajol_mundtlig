@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Nav from "@/components/Nav";
 import FeaturedEvents from "@/components/FeaturedEvents/FeaturedEvents";
 import WelcomeCard from "@/components/WelcomeCard";
-import Testimonials from "@/components/Testimonials";
+import Testimonials from "@/components/Testimonials/Testimonials";
 import VideoSection from "@/components/VideoSection";
 import Gallery from "@/components/Gallery";
 import Loader from "@/components/Loader";
