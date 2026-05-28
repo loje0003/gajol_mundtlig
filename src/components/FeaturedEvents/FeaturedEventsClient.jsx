@@ -9,12 +9,15 @@ const FeaturedEventsClient = ({ events }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
+  // AI blev brugt til at hjælpe med logikken bag responsiv pagination mellem mobil og desktop.
   const eventsPerPage = isMobile ? 1 : 2;
 
+  // AI blev brugt til at hjælpe med logikken bag pagination og slicing af events-arrayet.
   const startIndex = currentPage * eventsPerPage;
   const visibleEvents = events.slice(startIndex, startIndex + eventsPerPage);
   const totalPages = Math.ceil(events.length / eventsPerPage);
 
+  // AI blev brugt til at hjælpe med håndtering af screen resize gennem useEffect.
   useEffect(() => {
     const checkScreen = () => {
       setIsMobile(window.innerWidth < 768);
