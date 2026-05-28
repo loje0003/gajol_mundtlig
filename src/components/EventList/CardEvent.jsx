@@ -3,6 +3,7 @@ import Button from "../Button";
 import Link from "next/link";
 
 const CardEvent = ({ id, title, date, location, description, asset, schedule, index }) => {
+  // AI-assisted debugging af billedvisning
   const imageSrc = asset?.startsWith("/") ? `https://nightclub2026.onrender.com${asset}` : asset;
 
   const eventDate = new Date(date).toLocaleDateString("en-US", {

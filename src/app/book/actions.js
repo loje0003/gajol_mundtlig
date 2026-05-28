@@ -92,7 +92,7 @@ export async function reservationAction(prevState, formData) {
         date: new Date().toISOString(),
       }),
     });
-
+    // AI assistance: forslag til håndtering af API status codes (409 + generic errors)
     if (response.status === 409) {
       return {
         errors: {},
@@ -115,6 +115,7 @@ export async function reservationAction(prevState, formData) {
       submitError: "",
     };
   } catch {
+    // AI har hjulpet med fallback til network error handling
     return {
       errors: {},
       success: "",

@@ -4,6 +4,9 @@ import { Suspense } from "react";
 import CommentForm from "@/components/CommentForm/CommentForm";
 import Loader from "@/components/Loader";
 
+// AI-assisteret hjælp (inspireret af Next.js App Router patterns):
+// Hjælp til strukturering af server-side datahentning og opdeling af event + comment rendering.
+
 const DetailEvent = async ({ params }) => {
   return (
     <main>
