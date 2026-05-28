@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Button from "@/components/Button";
 import Link from "next/link";
@@ -38,6 +38,7 @@ const Gallery = () => {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // AI-assisteret: animationer er kun aktiveret på desktop
   const Wrapper = isDesktop ? motion.div : "div";
   const Item = isDesktop ? motion.div : "div";
 
@@ -83,7 +84,8 @@ const Gallery = () => {
               <Image src={img.src} alt="gallery image" fill className="object-cover transition duration-500 group-hover:scale-110" />
             </div>
 
-            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300 z-10" />
+            {/* AI + design tokens */}
+            <div className="absolute inset-0 bg-black-50 opacity-0 group-hover:opacity-100 transition duration-300 z-10" />
 
             <div
               className="absolute top-0 left-0 w-10 h-10 bg-primary-500 opacity-0 group-hover:opacity-100 transition duration-300 z-20"
@@ -101,8 +103,9 @@ const Gallery = () => {
           </Item>
         ))}
       </Wrapper>
+
       {selectedImage && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={() => setSelectedImage(null)}>
+        <div className="fixed inset-0 bg-black-85 z-50 flex items-center justify-center p-4" onClick={() => setSelectedImage(null)}>
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -112,10 +115,11 @@ const Gallery = () => {
                 return images[newIndex].src;
               });
             }}
-            className="absolute left-4 md:left-10 w-10 h-10 bg-black/60 border flex items-center justify-center z-50"
+            className="absolute left-4 md:left-10 w-10 h-10 bg-black-70 border flex items-center justify-center z-50"
           >
             <Image src="/assets/icon/Play.svg" alt="Previous" width={14} height={14} className="rotate-180" />
           </button>
+
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -129,13 +133,17 @@ const Gallery = () => {
           >
             <Image src="/assets/icon/Play.svg" alt="Next" width={14} height={14} />
           </button>
+
           <div className="max-w-4xl w-full overflow-hidden max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
             <div className="relative w-full h-[50vh] md:h-105 min-h-75">
               <Image src={selectedImage} alt="Selected image" fill className="object-cover" />
             </div>
-            <div className="bg-black px-6 md:px-10 py-6 md:py-10">
+
+            <div className="px-6 md:px-10 py-6 md:py-10">
               <h3 className="text-lg uppercase mb-4">Night club party</h3>
+
               <p className="text-gray-500 leading-7 mb-6">here are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
+
               <Link href="/events">
                 <Button variant="primary">Read more</Button>
               </Link>

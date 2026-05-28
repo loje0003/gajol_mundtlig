@@ -7,7 +7,7 @@ const EVENTS_PER_PAGE = 3;
 
 const EventPagination = ({ events }) => {
   const [currentPage, setCurrentPage] = useState(1);
-
+  // AI-værktøj brugt til hjælp med pagination-beregning og udvælgelse af events pr. side
   const totalPages = Math.max(1, Math.ceil(events.length / EVENTS_PER_PAGE));
   const startIndex = (currentPage - 1) * EVENTS_PER_PAGE;
   const currentEvents = events.slice(startIndex, startIndex + EVENTS_PER_PAGE);

@@ -16,6 +16,7 @@
   --color-gray-500: oklch(0.6434 0 0);
 
   /* Alpha / overlays */
+  --color-black-50: oklch(0 0 0 / 0.5);
   --color-black-70: oklch(0 0 0 / 0.7);
   --color-black-85: oklch(0 0 0 / 0.85);
   --color-black-90: oklch(0 0 0 / 0.9);
