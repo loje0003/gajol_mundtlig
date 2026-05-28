@@ -48,7 +48,9 @@ export default function Home() {
       <Gallery />
       <MusicSection />
       <VideoSection />
-      <Testimonials />
+      <Suspense fallback={<Loader text="Loading testimonials..." />}>
+        <Testimonials />
+      </Suspense>
 
       <Newsletter />
     </main>
