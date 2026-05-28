@@ -1,10 +1,10 @@
-import Nav from "@/components/Nav";
+import { Suspense } from "react";
 import Hero from "@/components/Hero";
-
+import Nav from "@/components/Nav";
 import BookClient from "./BookClient";
 
-export default async function Book(props) {
-  const searchParams = await props.searchParams;
+async function BookContent({ searchParams }) {
+  const params = await searchParams;
 
   const eventsRes = await fetch("https://nightclub2026.onrender.com/events", {
     cache: "no-store",
@@ -17,12 +17,18 @@ export default async function Book(props) {
   const events = await eventsRes.json();
   const reservations = await reservationsRes.json();
 
-  return (
-    <div>
-      <Nav />
-      <Hero text="Book table" />
+  return <BookClient events={events} reservations={reservations} selectedEventId={params.eventId} />;
+}
 
-      <BookClient events={events} reservations={reservations} selectedEventId={searchParams?.eventId} />
-    </div>
+export default function Book({ searchParams }) {
+  return (
+    <>
+      <Nav />
+      <Hero text="Book Table" />
+
+      <Suspense fallback={<p className="p-10 text-center">Loading booking...</p>}>
+        <BookContent searchParams={searchParams} />
+      </Suspense>
+    </>
   );
 }
