@@ -41,11 +41,11 @@ const Button = ({ children, onClick, variant = "primary", className = "", type =
     );
   }
 
+  // AI blev brugt til sparring omkring hover-animationer med Framer Motion. Løsningen til de animerede border-linjer blev efterfølgende tilpasset projektets design
   return (
     <motion.button type={type} onClick={onClick} className={`${base} ${className}`} initial="rest" whileHover="hover" animate="rest">
       <span className="absolute top-0 left-0 w-full h-px bg-white" />
       <span className="absolute bottom-0 left-0 w-full h-px bg-white" />
-      // AI blev brugt til sparring omkring hover-animationer med Framer Motion. Løsningen til de animerede border-linjer blev efterfølgende tilpasset projektets design
       <motion.span
         className="absolute top-0 left-0 w-full h-px bg-primary-500"
         style={{ originX: 1 }}

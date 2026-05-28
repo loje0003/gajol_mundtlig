@@ -24,17 +24,17 @@ export default function Contact() {
         <form action={formAction} className="w-full max-w-2xl space-y-5">
           <div>
             <input type="text" name="name" placeholder="Your Name" className="w-full border  placeholder-white px-5 py-5 outline-none focus:border-white transition" />
-            {state.errors?.name && <p className="text-red-500 mt-2">{state.errors.name}</p>}
+            {state.errors?.name && <p className="text-primary-500 mt-2">{state.errors.name}</p>}
           </div>
 
           <div>
-            <input type="email" name="email" placeholder="Your Email" className="w-full bg-black border text-white placeholder-white px-5 py-5 outline-none focus:border-white transition" />
-            {state.errors?.email && <p className="text-red-500 mt-2">{state.errors.email}</p>}
+            <input type="email" name="email" placeholder="Your Email" className="w-full border placeholder-white px-5 py-5 outline-none focus:border-white transition" />
+            {state.errors?.email && <p className="text-primary-500 mt-2">{state.errors.email}</p>}
           </div>
 
           <div>
-            <textarea name="content" placeholder="Your Comment" rows={10} className="w-full bg-black border text-white placeholder-white px-5 py-5 outline-none focus:border-white transition" />
-            {state.errors?.content && <p className="text-red-500 mt-2">{state.errors.content}</p>}
+            <textarea name="content" placeholder="Your Comment" rows={10} className="w-full border  placeholder-white px-5 py-5 outline-none focus:border-white transition" />
+            {state.errors?.content && <p className="text-primary-500 mt-2">{state.errors.content}</p>}
           </div>
 
           <div className="text-right">
@@ -43,9 +43,9 @@ export default function Contact() {
             </Button>
           </div>
 
-          {state.submitError && <p className="text-red-500 mt-2">{state.submitError}</p>}
+          {state.submitError && <p className="text-primary-500 mt-2">{state.submitError}</p>}
 
-          {state.success && <p className="text-green-500">{state.success}</p>}
+          {state.success && <p className="text-primary-500">{state.success}</p>}
         </form>
       </div>
     </div>

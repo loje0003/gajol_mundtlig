@@ -38,6 +38,12 @@ export default function Newsletter() {
         body: JSON.stringify({ email }),
       });
 
+      if (response.status === 409) {
+        setError("This email is already subscribed");
+        setLoading(false);
+        return;
+      }
+
       if (!response.ok) {
         setError("Something went wrong, please try again");
         setLoading(false);
@@ -65,14 +71,14 @@ export default function Newsletter() {
       </h3>
 
       <form onSubmit={handleSubscribe} className="text-center mt-10">
-        <input className="border-b-1 pb-2 my-auto lg:mr-8 bg-black text-white placeholder-white outline-none focus:border-primary-500 transition" type="email" size="45" placeholder="Enter Your Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <input className="border-b-1 pb-2 my-auto lg:mr-8  placeholder-white outline-none focus:border-primary-500 transition" type="email" size="45" placeholder="Enter Your Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
         <Button type="submit" variant="primary" disabled={loading}>
           {loading ? "Subscribing..." : "Subscribe"}
         </Button>
 
         {error && <p className="text-red-500 mt-2">{error}</p>}
-        {success && <p className="text-green-500 mt-2">{success}</p>}
+        {success && <p className="text-red-500  mt-2">{success}</p>}
       </form>
     </div>
   );

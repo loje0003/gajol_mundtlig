@@ -1,4 +1,6 @@
 "use client";
+// AI-assisteret hjælp (inspireret af Next.js Forms guide):
+// Bruges som støtte til event selection, bordvalg og form submission.
 
 import { useMemo, useState } from "react";
 import { useActionState } from "react";
@@ -91,27 +93,27 @@ export default function BookClient({ events, reservations, selectedEventId }) {
           <input type="hidden" name="eventId" value={selectedEvent?.id || ""} />
 
           <div>
-            <input name="name" placeholder="Your Name" className="w-full border px-5 py-5 text-white bg-black" />
+            <input name="name" placeholder="Your Name" className="w-full border px-5 py-5 " />
             {state.errors?.name && <p>{state.errors.name}</p>}
           </div>
 
           <div>
-            <input name="email" placeholder="Your Email" className="w-full border px-5 py-5 text-white bg-black" />
+            <input name="email" placeholder="Your Email" className="w-full border px-5 py-5 " />
             {state.errors?.email && <p>{state.errors.email}</p>}
           </div>
 
           <div>
-            <input name="table" value={formData.table} readOnly placeholder="Table Number" className="w-full border px-5 py-5 text-white bg-black" />
+            <input name="table" value={formData.table} readOnly placeholder="Table Number" className="w-full border px-5 py-5 " />
             {state.errors?.table && <p>{state.errors.table}</p>}
           </div>
 
           <div>
-            <input name="guests" placeholder="Number of Guests" className="w-full border px-5 py-5 text-white bg-black" />
+            <input name="guests" placeholder="Number of Guests" className="w-full border px-5 py-5 " />
             {state.errors?.guests && <p>{state.errors.guests}</p>}
           </div>
 
           <div>
-            <select value={selectedEvent?.id || ""} onChange={handleEventChange} className="w-full border px-5 py-5 text-white bg-black">
+            <select value={selectedEvent?.id || ""} onChange={handleEventChange} className="w-full border px-5 py-5 ">
               <option value="" disabled>
                 Choose a night
               </option>
@@ -125,16 +127,16 @@ export default function BookClient({ events, reservations, selectedEventId }) {
           </div>
 
           <div>
-            <input name="phone" placeholder="Phone" className="w-full border px-5 py-5 text-white bg-black" />
+            <input name="phone" placeholder="Phone" className="w-full border px-5 py-5" />
             {state.errors?.phone && <p>{state.errors.phone}</p>}
           </div>
 
           <div className="md:col-span-2">
-            <textarea name="comment" placeholder="Comment" className="w-full border px-5 py-5 text-white bg-black" />
+            <textarea name="comment" placeholder="Comment" className="w-full border px-5 py-5" />
           </div>
 
-          {state.success && <p className="text-green-500">{state.success}</p>}
-          {state.submitError && <p className="text-pink-500">{state.submitError}</p>}
+          {state.success && <p className="text-primary-500">{state.success}</p>}
+          {state.submitError && <p className="text-primary-500">{state.submitError}</p>}
 
           <div className="md:col-span-2 flex justify-end">
             <Button type="submit" disabled={pending}>
