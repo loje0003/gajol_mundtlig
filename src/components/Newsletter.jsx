@@ -4,6 +4,8 @@ import { useState } from "react";
 import { z } from "zod";
 import Button from "@/components/Button";
 
+// AI blev brugt til støtte til opsætning af zod
+
 const newsletterSchema = z.object({
   email: z.string().email("Please write a valid mail"),
 });
