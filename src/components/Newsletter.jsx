@@ -77,8 +77,8 @@ export default function Newsletter() {
           {loading ? "Subscribing..." : "Subscribe"}
         </Button>
 
-        {error && <p className="text-red-500 mt-2">{error}</p>}
-        {success && <p className="text-red-500  mt-2">{success}</p>}
+        {error && <p className="text-primary-500 mt-2">{error}</p>}
+        {success && <p className="text-primary-500  mt-2">{success}</p>}
       </form>
     </div>
   );
