@@ -18,6 +18,7 @@ const initialState = {
 const tableImages = ["/assets/table/table_1.png", "/assets/table/table_1.png", "/assets/table/table_2.png", "/assets/table/table_1.png", "/assets/table/table_3.png", "/assets/table/table_1.png", "/assets/table/table_1.png", "/assets/table/table_2.png", "/assets/table/table_1.png", "/assets/table/table_3.png", "/assets/table/table_1.png", "/assets/table/table_1.png", "/assets/table/table_2.png", "/assets/table/table_1.png", "/assets/table/table_3.png"];
 
 export default function BookClient({ events, reservations, selectedEventId }) {
+  // AI assistance: hjælp til at finde det valgte event fra URL (selectedEventId) i events-arrayet og sikre korrekt sammenligning af id'er
   const initialEvent = events.find((e) => String(e.id) === String(selectedEventId)) || null;
 
   const [selectedEvent, setSelectedEvent] = useState(initialEvent);
@@ -28,12 +29,14 @@ export default function BookClient({ events, reservations, selectedEventId }) {
 
   const [state, formAction, pending] = useActionState(reservationAction, initialState);
 
+  // AI har hjulpet med at strukturere useMemo til at filtrere reserverede borde pr. event/dato
   const reservedTables = useMemo(() => {
     if (!selectedEvent) return [];
 
     return reservations.filter((r) => new Date(r.date).toDateString() === new Date(selectedEvent.date).toDateString()).map((r) => String(r.table));
   }, [reservations, selectedEvent]);
 
+  // AI har hjulpet med logik til klikbart grid + selected state håndtering
   const handleSelectTable = (tableNumber) => {
     if (reservedTables.includes(tableNumber)) return;
 
@@ -43,6 +46,7 @@ export default function BookClient({ events, reservations, selectedEventId }) {
     }));
   };
 
+  // AI har hjulpet med event switch + opdatering af URL uden reload
   const handleEventChange = (e) => {
     const event = events.find((ev) => String(ev.id) === e.target.value);
 
@@ -58,7 +62,6 @@ export default function BookClient({ events, reservations, selectedEventId }) {
           const tableNumber = String(index + 1);
 
           const isReserved = reservedTables.includes(tableNumber);
-
           const isSelected = formData.table === tableNumber;
 
           return (
@@ -89,25 +92,21 @@ export default function BookClient({ events, reservations, selectedEventId }) {
 
           <div>
             <input name="name" placeholder="Your Name" className="w-full border px-5 py-5 text-white bg-black" />
-
             {state.errors?.name && <p>{state.errors.name}</p>}
           </div>
 
           <div>
             <input name="email" placeholder="Your Email" className="w-full border px-5 py-5 text-white bg-black" />
-
             {state.errors?.email && <p>{state.errors.email}</p>}
           </div>
 
           <div>
             <input name="table" value={formData.table} readOnly placeholder="Table Number" className="w-full border px-5 py-5 text-white bg-black" />
-
             {state.errors?.table && <p>{state.errors.table}</p>}
           </div>
 
           <div>
             <input name="guests" placeholder="Number of Guests" className="w-full border px-5 py-5 text-white bg-black" />
-
             {state.errors?.guests && <p>{state.errors.guests}</p>}
           </div>
 
@@ -127,7 +126,6 @@ export default function BookClient({ events, reservations, selectedEventId }) {
 
           <div>
             <input name="phone" placeholder="Phone" className="w-full border px-5 py-5 text-white bg-black" />
-
             {state.errors?.phone && <p>{state.errors.phone}</p>}
           </div>
 
@@ -136,7 +134,6 @@ export default function BookClient({ events, reservations, selectedEventId }) {
           </div>
 
           {state.success && <p className="text-green-500">{state.success}</p>}
-
           {state.submitError && <p className="text-pink-500">{state.submitError}</p>}
 
           <div className="md:col-span-2 flex justify-end">
