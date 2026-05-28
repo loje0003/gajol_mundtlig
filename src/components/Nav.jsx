@@ -141,7 +141,7 @@ const Nav = () => {
           fixed inset-0
           h-dvh w-dvw
           text-white
-          m-0 p-0
+          m-0 p-0 bg-black-90 backdrop-blur-md border-none outline-none
         "
       >
         <div className="absolute top-6 right-6">
