@@ -82,7 +82,7 @@ const FeaturedEventsClient = ({ events }) => {
                 </div>
               </div>
 
-              <div className="bg-pink-500 px-4 py-3 flex justify-between items-center">
+              <div className="bg-primary-500 px-4 py-3 flex justify-between items-center">
                 <h3 className="text-sm uppercase">{event.title}</h3>
 
                 <p className="text-sm">

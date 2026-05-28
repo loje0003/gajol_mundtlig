@@ -1,4 +1,5 @@
 "use client";
+// AI-assisteret hjælp (inspireret af Next.js Forms guide):
 
 import Button from "@/components/Button";
 import { useState } from "react";
@@ -95,22 +96,22 @@ const CommentFormClient = ({ eventId, initialComments }) => {
         <div className="flex flex-col md:flex-row gap-4">
           <div className="w-full">
             <input type="text" name="name" placeholder="Your Name" className="w-full mb-2 p-4 border" value={formData.name} onChange={handleChange} />
-            {errors.name && <p className="text-pink-500 text-sm mb-4">{errors.name}</p>}
+            {errors.name && <p className="text-primary-500 text-sm mb-4">{errors.name}</p>}
           </div>
 
           <div className="w-full">
             <input type="email" name="email" placeholder="Your Email" className="w-full mb-2 p-4 border" value={formData.email} onChange={handleChange} />
-            {errors.email && <p className="text-pink-500 text-sm mb-4">{errors.email}</p>}
+            {errors.email && <p className="text-primary-500 text-sm mb-4">{errors.email}</p>}
           </div>
         </div>
 
         <textarea name="content" placeholder="Your Comment" rows={10} className="w-full mb-2 p-4 border" value={formData.content} onChange={handleChange} />
 
-        {errors.content && <p className="text-pink-500 text-sm mb-4">{errors.content}</p>}
+        {errors.content && <p className="text-primary-500 text-sm mb-4">{errors.content}</p>}
 
-        {success && <p className="text-green-500 mb-4">{success}</p>}
+        {success && <p className="text-primary-500 mb-4">{success}</p>}
 
-        {submitError && <p className="text-pink-500 mb-4">{submitError}</p>}
+        {submitError && <p className="text-primary-500 mb-4">{submitError}</p>}
 
         <div className="flex justify-center md:justify-end mb-10">
           <Button variant="primary" type="submit">

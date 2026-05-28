@@ -39,7 +39,7 @@ const TestimonialsSlider = ({ testimonials }) => {
 
         <div className="flex justify-center gap-3 mt-10">
           {testimonials.map((_, index) => (
-            <button key={index} onClick={() => setCurrentIndex(index)} className={`w-4 h-4 transition ${currentIndex === index ? "bg-pink-500" : "bg-white"}`} />
+            <button key={index} onClick={() => setCurrentIndex(index)} className={`w-4 h-4 transition ${currentIndex === index ? "bg-primary-500" : "bg-white"}`} />
           ))}
         </div>
       </div>
