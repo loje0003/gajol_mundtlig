@@ -33,6 +33,8 @@ const tracks = [
 ];
 
 function MusicSection() {
+  // Vi forsøgte først at styre audio gennem state, men AI hjalp med at identificere at useRef var nødvendigt for at få adgang til audio-elementets play, pause og volume funktioner.
+
   const audioRef = useRef(null);
 
   const [currentTrack, setCurrentTrack] = useState(0);
@@ -41,6 +43,7 @@ function MusicSection() {
   const [duration, setDuration] = useState(0);
 
   const activeTrack = tracks[currentTrack];
+  // AI blev brugt til at hjælpe med logikken bag beregningen af progressbaren ud fra sangens længde.
   const progress = duration ? (currentTime / duration) * 100 : 0;
 
   const playTrack = () => {
@@ -95,6 +98,8 @@ function MusicSection() {
     };
   }, [currentTrack]);
 
+  // AI blev brugt til at hjælpe med logikken bag omregning af sangens tid til minutter og sekunder.
+
   const formatTime = (time) => {
     if (!time) return "00:00";
 
@@ -113,7 +118,7 @@ function MusicSection() {
           <div className="order-6 md:order-1 relative overflow-hidden group w-full max-w-[320px] h-80 mx-auto md:mx-0">
             <Image src={activeTrack.image} alt={activeTrack.title} width={600} height={600} className="w-full h-full object-cover" />
 
-            <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center opacity-100 md:hidden">
+            <div className="absolute inset-0  flex flex-col items-center justify-center opacity-100 md:hidden">
               <div className="absolute top-0 left-0 w-10 h-10 bg-primary-500" style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }} />
 
               <div className="absolute bottom-0 right-0 w-10 h-10 bg-primary-500" style={{ clipPath: "polygon(100% 100%, 100% 0, 0 100%)" }} />
@@ -178,7 +183,7 @@ function MusicSection() {
             <button key={track.title} onClick={() => changeTrack(index)} className="relative overflow-hidden group">
               <Image src={track.image} alt={track.title} width={300} height={300} className="w-full aspect-square object-cover" />
 
-              <div className={`absolute inset-0 bg-black/50 flex flex-col items-center justify-center transition duration-300 ${currentTrack === index ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
+              <div className={`absolute inset-0 flex flex-col items-center justify-center transition duration-300 ${currentTrack === index ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
                 <div className="absolute top-0 left-0 w-10 h-10 bg-primary-500" style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }} />
 
                 <div className="absolute bottom-0 right-0 w-10 h-10 bg-primary-500" style={{ clipPath: "polygon(100% 100%, 100% 0, 0 100%)" }} />
