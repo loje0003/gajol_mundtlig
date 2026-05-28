@@ -41,6 +41,8 @@ const Nav = () => {
     <header className="sticky top-0 z-50 border-y border-primary-500 bg-black px-6 md:px-35 py-6">
       <div
         className="absolute top-0 left-0 w-10 h-10 bg-primary-500"
+        // Vi fandt frem til clip-path gennem MDN, men AI blev brugt til at hjælpe med hvordan løsningen kunne implementeres i vores komponenter.
+
         style={{
           clipPath: "polygon(0 0, 100% 0, 0 100%)",
         }}
@@ -138,7 +140,6 @@ const Nav = () => {
         className="
           fixed inset-0
           h-dvh w-dvw
-          bg-black/90
           text-white
           m-0 p-0
         "
