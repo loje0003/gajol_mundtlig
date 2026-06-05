@@ -7,7 +7,7 @@ const Button = ({ children, onClick, variant = "primary", className = "", type =
 
   const variants = {
     primary: "relative px-5 py-2 cursor-pointer uppercase overflow-hidden group",
-    secondary: "border border-gray-500 uppercase",
+    secondary: "border border-primary-500 uppercase",
 
     tertiary: "relative text-white uppercase overflow-hidden",
 

@@ -39,10 +39,18 @@ const TestimonialsSlider = ({ testimonials }) => {
             <FaSnapchatGhost />
           </div>
         </div>
+        <div className="flex justify-center gap-6 mt-8">
+          <button onClick={() => setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))} className="w-8 h-8 border flex items-center justify-center">
+            <Image src="/assets/icon/Play.svg" alt="Previous" width={12} height={12} className="rotate-180" />
+          </button>
 
+          <button onClick={() => setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))} className="w-8 h-8 border flex items-center justify-center">
+            <Image src="/assets/icon/Play.svg" alt="Next" width={12} height={12} />
+          </button>
+        </div>
         <div className="flex justify-center gap-3 mt-10">
           {testimonials.map((_, index) => (
-            <button key={index} onClick={() => setCurrentIndex(index)} className={`w-4 h-4 transition ${currentIndex === index ? "bg-primary-500" : "bg-white"}`} />
+            <button key={index} onClick={() => setCurrentIndex(index)} className={`w-2 h-2 transition ${currentIndex === index ? "bg-primary-500" : "bg-white"}`} />
           ))}
         </div>
       </div>
