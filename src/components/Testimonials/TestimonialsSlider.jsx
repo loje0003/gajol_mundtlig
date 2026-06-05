@@ -17,6 +17,9 @@ const TestimonialsSlider = ({ testimonials }) => {
       <div className="absolute inset-0 bg-black/90 z-0" />
 
       <div className="text-center py-20 px-5 z-10 relative">
+        <h2 className="text-center text-[25px] uppercase">Testimonials</h2>
+
+        <Image className="pb-10 mx-auto" src="/assets/bottom_line2.png" alt="bottom line" width={200} height={20} />
         <Image src={`https://nightclub2026.onrender.com${testimonial.asset.url}`} alt={testimonial.asset.alt} width={170} height={170} className="mx-auto" />
 
         <h3 className="mt-5 text-2xl">{testimonial.name}</h3>
