@@ -29,6 +29,10 @@ export default function Home() {
 
       <Image className="mx-auto" src="/assets/bottom_line2.png" alt="bottom line" width={200} height={20} />
 
+      <div className="text-center max-w-3xl mx-auto my-6">
+        <p>Step into a world of music, energy and unforgettable experiences. Explore our venue, discover talented DJs and enjoy the nightlife at its very best.</p>
+      </div>
+
       <div className="flex flex-col md:flex-row justify-center gap-6 mt-10 items-center">
         <WelcomeCard image="/assets/content-img/thumb1.jpg" icon={<img src="/assets/icon/favicon.png" className="w-8 h-8" />} title="NIGHT CLUB" text="There are many variations of passages of Lorem Ipsum..." />
 
