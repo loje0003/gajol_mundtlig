@@ -118,7 +118,7 @@ function MusicSection() {
           <div className="order-6 md:order-1 relative overflow-hidden group w-full max-w-[320px] h-80 mx-auto md:mx-0">
             <Image src={activeTrack.image} alt={activeTrack.title} width={600} height={600} className="w-full h-full object-cover" />
 
-            <div className="absolute inset-0  flex flex-col items-center justify-center opacity-100 md:hidden">
+            <div className="absolute inset-0 flex flex-col items-center justify-center opacity-100 md:hidden">
               <div className="absolute top-0 left-0 w-10 h-10 bg-primary-500" style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }} />
 
               <div className="absolute bottom-0 right-0 w-10 h-10 bg-primary-500" style={{ clipPath: "polygon(100% 100%, 100% 0, 0 100%)" }} />
@@ -164,6 +164,7 @@ function MusicSection() {
           </div>
         </div>
 
+        {/* Mobile navigation */}
         <div className="flex md:hidden justify-center gap-6 mt-8">
           <button onClick={prevTrack} className="w-10 h-10 border flex items-center justify-center">
             <Image src="/assets/icon/Play.svg" alt="Previous" width={12} height={12} className="rotate-180" />
@@ -174,11 +175,8 @@ function MusicSection() {
           </button>
         </div>
 
-        <div className="hidden md:grid grid-cols-7 gap-4 mt-12">
-          <button onClick={prevTrack} className="w-8 h-8 border flex items-center justify-center">
-            <Image src="/assets/icon/Play.svg" alt="Previous" width={12} height={12} className="rotate-180" />
-          </button>
-
+        {/* Desktop thumbnails */}
+        <div className="hidden md:grid grid-cols-5 gap-4 mt-12">
           {tracks.map((track, index) => (
             <button key={track.title} onClick={() => changeTrack(index)} className="relative overflow-hidden group">
               <Image src={track.image} alt={track.title} width={300} height={300} className="w-full aspect-square object-cover" />
@@ -194,6 +192,13 @@ function MusicSection() {
               </div>
             </button>
           ))}
+        </div>
+
+        {/* Desktop arrows */}
+        <div className="hidden md:flex justify-center gap-6 mt-8">
+          <button onClick={prevTrack} className="w-8 h-8 border flex items-center justify-center">
+            <Image src="/assets/icon/Play.svg" alt="Previous" width={12} height={12} className="rotate-180" />
+          </button>
 
           <button onClick={nextTrack} className="w-8 h-8 border flex items-center justify-center">
             <Image src="/assets/icon/Play.svg" alt="Next" width={12} height={12} />

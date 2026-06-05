@@ -93,10 +93,19 @@ const FeaturedEventsClient = ({ events }) => {
           );
         })}
       </div>
+      <div className="flex justify-center gap-6 mt-8">
+        <button onClick={() => setCurrentPage((prev) => (prev === 0 ? totalPages - 1 : prev - 1))} className="w-8 h-8 border flex items-center justify-center">
+          <Image src="/assets/icon/Play.svg" alt="Previous" width={12} height={12} className="rotate-180" />
+        </button>
+
+        <button onClick={() => setCurrentPage((prev) => (prev === totalPages - 1 ? 0 : prev + 1))} className="w-8 h-8 border flex items-center justify-center">
+          <Image src="/assets/icon/Play.svg" alt="Next" width={12} height={12} />
+        </button>
+      </div>
 
       <div className="flex justify-center gap-3 mt-8">
         {Array.from({ length: totalPages }).map((_, page) => (
-          <button key={page} onClick={() => setCurrentPage(page)} className={`w-4 h-4 transition ${currentPage === page ? "bg-pink-500" : "bg-white"}`} />
+          <button key={page} onClick={() => setCurrentPage(page)} className={`w-2 h-2 transition ${currentPage === page ? "bg-pink-500" : "bg-white"}`} />
         ))}
       </div>
     </div>

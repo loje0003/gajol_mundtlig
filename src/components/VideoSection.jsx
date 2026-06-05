@@ -7,13 +7,14 @@ import SectionTitle from "@/components/SectionTitle";
 const videos = ["/assets/media/video-crowd.mp4", "/assets/media/video-dj-crowd-2.mp4", "/assets/media/video-dj-crowd1.mp4"];
 
 const VideoSection = () => {
-  const [current, setCurrent] = useState(-1);
+  const [current, setCurrent] = useState(0);
 
   return (
     <section className="w-full flex flex-col items-center gap-6">
       <SectionTitle title="featured videos" />
+
       <div className="relative w-full max-w-5xl h-105 overflow-hidden">
-        {current === -1 ? <Image src="/assets/content-img/video_poster.jpg" alt="Video poster" fill className="object-cover" /> : <video src={videos[current]} className="w-full h-full object-cover" controls />}
+        <video src={videos[current]} className="w-full h-full object-cover" controls />
 
         <div
           className="absolute top-0 left-0 w-15 h-15 bg-primary-500"
@@ -31,16 +32,19 @@ const VideoSection = () => {
       </div>
 
       <div className="flex items-center gap-3">
-        {/* AI blev brugt til at hjælpe med logikken bag navigationen mellem videoer og poster-billedet. */}
-
-        <button onClick={() => setCurrent((prev) => (prev === -1 ? videos.length - 1 : prev === 0 ? -1 : prev - 1))} className="w-8 h-8 border flex items-center justify-center">
+        <button onClick={() => setCurrent((prev) => (prev === 0 ? videos.length - 1 : prev - 1))} className="w-8 h-8 border flex items-center justify-center">
           <Image src="/assets/icon/Play.svg" alt="Previous" width={12} height={12} className="rotate-180" />
         </button>
-        {/* AI blev brugt til at hjælpe med logikken bag navigationen mellem videoer og poster-billedet. */}
 
-        <button onClick={() => setCurrent((prev) => (prev === videos.length - 1 ? -1 : prev + 1))} className="w-8 h-8 border flex items-center justify-center">
+        <button onClick={() => setCurrent((prev) => (prev === videos.length - 1 ? 0 : prev + 1))} className="w-8 h-8 border flex items-center justify-center">
           <Image src="/assets/icon/Play.svg" alt="Next" width={12} height={12} />
         </button>
+      </div>
+
+      <div className="flex justify-center gap-3">
+        {videos.map((_, index) => (
+          <button key={index} onClick={() => setCurrent(index)} className={`w-2 h-2 transition ${current === index ? "bg-primary-500" : "bg-white"}`} />
+        ))}
       </div>
     </section>
   );
