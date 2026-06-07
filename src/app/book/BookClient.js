@@ -1,12 +1,9 @@
 "use client";
-// AI-assisteret hjælp (inspireret af Next.js Forms guide):
-// Bruges som støtte til event selection, bordvalg og form submission.
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useActionState } from "react";
 
 import Image from "next/image";
-
 import Button from "@/components/Button";
 
 import { reservationAction } from "./actions";
@@ -20,10 +17,14 @@ const initialState = {
 const tableImages = ["/assets/table/table_1.png", "/assets/table/table_1.png", "/assets/table/table_2.png", "/assets/table/table_1.png", "/assets/table/table_3.png", "/assets/table/table_1.png", "/assets/table/table_1.png", "/assets/table/table_2.png", "/assets/table/table_1.png", "/assets/table/table_3.png", "/assets/table/table_1.png", "/assets/table/table_1.png", "/assets/table/table_2.png", "/assets/table/table_1.png", "/assets/table/table_3.png"];
 
 export default function BookClient({ events, reservations, selectedEventId }) {
-  // AI assistance: hjælp til at finde det valgte event fra URL (selectedEventId) i events-arrayet og sikre korrekt sammenligning af id'er
+  // FIX 1: hold state men sync korrekt med URL
   const initialEvent = events.find((e) => String(e.id) === String(selectedEventId)) || null;
-
   const [selectedEvent, setSelectedEvent] = useState(initialEvent);
+
+  useEffect(() => {
+    const event = events.find((e) => String(e.id) === String(selectedEventId)) || null;
+    setSelectedEvent(event);
+  }, [selectedEventId, events]);
 
   const [formData, setFormData] = useState({
     table: "",
@@ -31,14 +32,12 @@ export default function BookClient({ events, reservations, selectedEventId }) {
 
   const [state, formAction, pending] = useActionState(reservationAction, initialState);
 
-  // AI har hjulpet med at strukturere useMemo til at filtrere reserverede borde pr. event/dato
   const reservedTables = useMemo(() => {
     if (!selectedEvent) return [];
 
     return reservations.filter((r) => new Date(r.date).toDateString() === new Date(selectedEvent.date).toDateString()).map((r) => String(r.table));
   }, [reservations, selectedEvent]);
 
-  // AI har hjulpet med logik til klikbart grid + selected state håndtering
   const handleSelectTable = (tableNumber) => {
     if (reservedTables.includes(tableNumber)) return;
 
@@ -48,7 +47,7 @@ export default function BookClient({ events, reservations, selectedEventId }) {
     }));
   };
 
-  // AI har hjulpet med event switch + opdatering af URL uden reload
+  // FIX 2: ændrer event uden reload (ingen UI ændring)
   const handleEventChange = (e) => {
     const event = events.find((ev) => String(ev.id) === e.target.value);
 
@@ -91,6 +90,7 @@ export default function BookClient({ events, reservations, selectedEventId }) {
 
         <form action={formAction} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <input type="hidden" name="eventId" value={selectedEvent?.id || ""} />
+          <input type="hidden" name="eventDate" value={selectedEvent?.date || ""} />
 
           <div>
             <input name="name" placeholder="Your Name" className="w-full border px-5 py-5 " />
@@ -102,10 +102,18 @@ export default function BookClient({ events, reservations, selectedEventId }) {
             {state.errors?.email && <p>{state.errors.email}</p>}
           </div>
 
-          <div>
-            <input name="table" value={formData.table} readOnly placeholder="Table Number" className="w-full border px-5 py-5 " />
-            {state.errors?.table && <p>{state.errors.table}</p>}
-          </div>
+          <input
+            name="table"
+            value={formData.table}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                table: e.target.value,
+              }))
+            }
+            placeholder="Table Number"
+            className="w-full border px-5 py-5 "
+          />
 
           <div>
             <input name="guests" placeholder="Number of Guests" className="w-full border px-5 py-5 " />
@@ -135,8 +143,8 @@ export default function BookClient({ events, reservations, selectedEventId }) {
             <textarea name="comment" placeholder="Comment" className="w-full border px-5 py-5" />
           </div>
 
-          {state.success && <p className="text-primary-500">{state.success}</p>}
-          {state.submitError && <p className="text-primary-500">{state.submitError}</p>}
+          {state.success && <p>{state.success}</p>}
+          {state.submitError && <p>{state.submitError}</p>}
 
           <div className="md:col-span-2 flex justify-end">
             <Button type="submit" disabled={pending}>
