@@ -63,6 +63,7 @@ export async function reservationAction(prevState, formData) {
     phone: formData.get("phone"),
     eventId: formData.get("eventId"),
     comment: formData.get("comment"),
+    eventDate: formData.get("eventDate"),
   };
 
   const result = reservationSchema.safeParse(values);
@@ -89,7 +90,7 @@ export async function reservationAction(prevState, formData) {
       },
       body: JSON.stringify({
         ...result.data,
-        date: new Date().toISOString(),
+        date: values.eventDate || new Date().toISOString(),
       }),
     });
     // AI assistance: forslag til håndtering af API status codes (409 + generic errors)
