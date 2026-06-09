@@ -109,6 +109,15 @@ const Gallery = () => {
           <button
             onClick={(e) => {
               e.stopPropagation();
+              setSelectedImage(null);
+            }}
+            className="absolute top-4 right-4 md:top-6 md:right-10 w-10 h-10 bg-black-70  flex items-center justify-center text-white text-2xl z-50 transition-colors duration-300 hover:text-primary-500"
+          >
+            &times;
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
               setSelectedImage((prev) => {
                 const currentIndex = images.findIndex((img) => img.src === prev);
                 const newIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
