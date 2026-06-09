@@ -52,7 +52,7 @@ export default function Home() {
       <Gallery />
       <MusicSection />
       <VideoSection />
-      <Suspense fallback={<Loader text="Loading testimonials..." />}>
+      <Suspense fallback={<Loader text="Loading..." />}>
         <Testimonials />
       </Suspense>
 

@@ -30,7 +30,7 @@ const Header = () => {
           initial={{ opacity: 0, rotateX: 100, y: -100 }}
           animate={{ opacity: 1, rotateX: 0, y: 0 }}
           transition={{
-            duration: 3.5,
+            duration: 1.9,
             ease: [0.16, 1, 0.3, 1],
           }}
           style={{ transformPerspective: 1000 }}
@@ -38,15 +38,15 @@ const Header = () => {
           <Image src="/assets/icon/Logo.svg" alt="logo" width={700} height={30} />
         </motion.div>
 
-        <motion.h3 variants={fadeSlide} initial="hidden" animate="show" transition={{ duration: 0.8, delay: 1.2 }} className="text-[15px] tracking-[1em] md:text-[30px] md:tracking-[0.65em] uppercase text-center">
+        <motion.h3 variants={fadeSlide} initial="hidden" animate="show" transition={{ duration: 0.5, delay: 0.6 }} className="text-[15px] tracking-[1em] md:text-[30px] md:tracking-[0.65em] uppercase text-center">
           have a good time
         </motion.h3>
 
-        <motion.div variants={fadeSlide} initial="hidden" animate="show" transition={{ duration: 0.8, delay: 1.2 }}>
+        <motion.div variants={fadeSlide} initial="hidden" animate="show" transition={{ duration: 0.5, delay: 0.6 }}>
           <Image src="/assets/bottom_line.png" alt="bottom line" width={500} height={30} />
         </motion.div>
 
-        <motion.div variants={fadeSlide} initial="hidden" animate="show" transition={{ duration: 0.8, delay: 1.2 }} className="grid grid-cols-2 gap-5 mt-5">
+        <motion.div variants={fadeSlide} initial="hidden" animate="show" transition={{ duration: 0.5, delay: 0.6 }} className="grid grid-cols-2 gap-5 mt-5">
           <Link href="/events">
             <Button variant="secondary">View event</Button>
           </Link>
