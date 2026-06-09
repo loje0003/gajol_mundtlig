@@ -93,34 +93,51 @@ export default function BookClient({ events, reservations, selectedEventId }) {
           <input type="hidden" name="eventDate" value={selectedEvent?.date || ""} />
 
           <div>
+            <label className="block mb-2">
+              Your Name <span className="text-primary-500">*</span>
+            </label>
             <input name="name" placeholder="Your Name" className="w-full border px-5 py-5 " />
-            {state.errors?.name && <p>{state.errors.name}</p>}
+            {state.errors?.name && <p className="text-primary-500">{state.errors.name}</p>}
           </div>
 
           <div>
+            <label className="block mb-2">
+              Your Email <span className="text-primary-500">*</span>
+            </label>
             <input name="email" placeholder="Your Email" className="w-full border px-5 py-5 " />
-            {state.errors?.email && <p>{state.errors.email}</p>}
+            {state.errors?.email && <p className="text-primary-500">{state.errors.email}</p>}
           </div>
 
-          <input
-            name="table"
-            value={formData.table}
-            onChange={(e) =>
-              setFormData((prev) => ({
-                ...prev,
-                table: e.target.value,
-              }))
-            }
-            placeholder="Table Number"
-            className="w-full border px-5 py-5 "
-          />
+          <div>
+            <label className="block mb-2">
+              Table Number <span className="text-primary-500">*</span>
+            </label>
+            <input
+              name="table"
+              value={formData.table}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  table: e.target.value,
+                }))
+              }
+              placeholder="Table Number"
+              className="w-full border px-5 py-5 "
+            />
+          </div>
 
           <div>
+            <label className="block mb-2">
+              Number of Guests <span className="text-primary-500">*</span>
+            </label>
             <input name="guests" placeholder="Number of Guests" className="w-full border px-5 py-5 " />
-            {state.errors?.guests && <p>{state.errors.guests}</p>}
+            {state.errors?.guests && <p className="text-primary-500">{state.errors.guests}</p>}
           </div>
 
           <div>
+            <label className="block mb-2">
+              Choose a night <span className="text-primary-500">*</span>
+            </label>
             <select value={selectedEvent?.id || ""} onChange={handleEventChange} className="w-full border px-5 py-5 ">
               <option value="" disabled>
                 Choose a night
@@ -135,8 +152,11 @@ export default function BookClient({ events, reservations, selectedEventId }) {
           </div>
 
           <div>
+            <label className="block mb-2">
+              Phone <span className="text-primary-500">*</span>
+            </label>
             <input name="phone" placeholder="Phone" className="w-full border px-5 py-5" />
-            {state.errors?.phone && <p>{state.errors.phone}</p>}
+            {state.errors?.phone && <p className="text-primary-500">{state.errors.phone}</p>}
           </div>
 
           <div className="md:col-span-2">
@@ -144,7 +164,7 @@ export default function BookClient({ events, reservations, selectedEventId }) {
           </div>
 
           {state.success && <p>{state.success}</p>}
-          {state.submitError && <p>{state.submitError}</p>}
+          {state.submitError && <p className="text-primary-500">{state.submitError}</p>}
 
           <div className="md:col-span-2 flex justify-end">
             <Button type="submit" disabled={pending}>
