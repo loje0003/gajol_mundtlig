@@ -29,7 +29,7 @@ export default function Home() {
 
       <Image className="mx-auto" src="/assets/bottom_line2.png" alt="bottom line" width={200} height={20} />
 
-      <div className="text-center max-w-3xl mx-auto my-6">
+      <div className="text-center max-w-3xl mx-auto my-6 md: px-12">
         <p>Step into a world of music, energy and unforgettable experiences. Explore our venue, discover talented DJs and enjoy the nightlife at its very best.</p>
       </div>
 
