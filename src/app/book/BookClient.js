@@ -58,7 +58,7 @@ export default function BookClient({ events, reservations, selectedEventId }) {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mt-20 mx-30">
+      <div className="grid grid-cols-3 md:grid-cols-5 gap-4 md:gap-8 mt-20 mx-5 md:mx-30">
         {tableImages.map((src, index) => {
           const tableNumber = String(index + 1);
 
@@ -74,7 +74,7 @@ export default function BookClient({ events, reservations, selectedEventId }) {
               className={`
                 relative flex items-center justify-center
                 ${isReserved ? "opacity-30 cursor-not-allowed" : "cursor-pointer"}
-                ${isSelected ? "scale-110 transition" : ""}
+             ${isSelected ? "scale-110 brightness-200 transition" : ""}
               `}
             >
               <Image src={src} alt={`table ${tableNumber}`} width={200} height={20} />
