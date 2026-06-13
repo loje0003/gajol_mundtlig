@@ -19,7 +19,7 @@ import { LiaCocktailSolid } from "react-icons/lia";
 export default function Home() {
   return (
     <main>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader text="Loading site..." />}>
         <Header />
       </Suspense>
 
@@ -52,7 +52,7 @@ export default function Home() {
       <Gallery />
       <MusicSection />
       <VideoSection />
-      <Suspense fallback={<Loader text="Loading..." />}>
+      <Suspense fallback={<Loader text="Loading site..." />}>
         <Testimonials />
       </Suspense>
 
