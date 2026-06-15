@@ -79,13 +79,13 @@ const Footer = () => {
           <p>Stay Connected With Us</p>
 
           <div className="grid grid-cols-3 gap-5 mt-3">
-            <div className="border border-white p-2">
+            <div className="border border-white p-2" aria-hidden="true">
               <TiSocialFacebook />
             </div>
-            <div className="border border-white p-2">
+            <div className="border border-white p-2" aria-hidden="true">
               <FaSnapchatGhost />
             </div>
-            <div className="border border-white p-2">
+            <div className="border border-white p-2" aria-hidden="true">
               <FaInstagram />
             </div>
           </div>

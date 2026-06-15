@@ -1,9 +1,14 @@
 import "./globals.css";
 import Footer from "../components/Footer";
 
+export const metadata = {
+  title: "Night Club GaJoL",
+  description: "Night Club website",
+};
+
 export default function RootLayout({ children }) {
   return (
-    <html>
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />

@@ -105,7 +105,7 @@ const FeaturedEventsClient = ({ events }) => {
 
       <div className="flex justify-center gap-3 mt-8">
         {Array.from({ length: totalPages }).map((_, page) => (
-          <button key={page} onClick={() => setCurrentPage(page)} className={`w-2 h-2 transition ${currentPage === page ? "bg-pink-500" : "bg-white"}`} />
+          <button key={page} onClick={() => setCurrentPage(page)} aria-label={`Go to page ${page + 1}`} className={`w-2 h-2 transition ${currentPage === page ? "bg-pink-500" : "bg-white"}`} />
         ))}
       </div>
     </div>

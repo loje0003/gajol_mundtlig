@@ -149,6 +149,7 @@ function MusicSection() {
 
               <input
                 type="range"
+                aria-label="Volume control"
                 min="0"
                 max="1"
                 step="0.01"
