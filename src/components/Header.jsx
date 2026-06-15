@@ -22,7 +22,7 @@ const Header = () => {
 
   return (
     <div className="relative w-full h-150">
-      <Image src={randomBg} alt="background" fill className="object-cover" />
+      <Image src={randomBg} alt="background" fill priority className="object-cover" />
       <div className="absolute inset-0 bg-black/70" />
 
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">

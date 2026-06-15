@@ -43,7 +43,7 @@ const VideoSection = () => {
 
       <div className="flex justify-center gap-3">
         {videos.map((_, index) => (
-          <button key={index} onClick={() => setCurrent(index)} className={`w-2 h-2 transition ${current === index ? "bg-primary-500" : "bg-white"}`} />
+          <button key={index} onClick={() => setCurrent(index)} aria-label={`Show video ${index + 1}`} className={`w-2 h-2 transition ${current === index ? "bg-primary-500" : "bg-white"}`} />
         ))}
       </div>
     </section>
